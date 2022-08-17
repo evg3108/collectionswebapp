@@ -1,0 +1,76 @@
+openapi: 3.0.3
+info:
+  title: Collections Web Application API (OpenAPI 3.0.3)
+  description: Here you can find all api methods for interactions with CollectionsWebApp backend
+  contact:
+    email: rusakova.evg@gmail.com
+  version: in developement
+tags:
+  - name: user
+    description: operations about users
+paths:
+  /user/create:
+    post:
+      tags:
+        - user
+      summary: Create new user
+      description: To create new user, enter email, password and choose a username
+      operationId: createNewUser
+      requestBody:
+        description: parameters for new user
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserRequestDto"
+      responses:
+        '200':
+          description: success!
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponseDto"
+  /user/{username}:
+    get:
+      tags:
+        - user
+      summary: Find user by username
+      description: Enter username to find the user
+      operationId: getUserById
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: success!
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponseDto"
+        '404':
+          description: User not found
+components:
+  schemas:
+    UserRequestDto:
+      type: object
+      properties:
+        username:
+          type: string
+          example: bjorn_bjornson
+        email:
+          type: string
+          example: test@example.com
+    UserResponseDto:
+      type: object
+      properties:
+        username:
+          type: string
+          example: bjorn_bjornson
+        email:
+          type: string
+          example: test@example.com
+        role:
+          type: string
+          example: admin
