@@ -3,9 +3,11 @@ package com.litvinea.collectionswebapp.controller;
 import com.litvinea.collectionswebapp.entity.User;
 import com.litvinea.collectionswebapp.service.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -24,12 +26,21 @@ public class UserController {
 
     @GetMapping("/{username}")
     public User getUserById(@RequestParam("username") String username) {
-        return userService.findUserByUsername(username);
+        Optional<User> foundUser = userService.findUserByUsername(username);
+        return foundUser.orElse(null);
     }
 
-    @PostMapping("/create")
-    public User createNewUser(@RequestBody UserRequestBody requestBody) {
-        return userService.createNewUser(requestBody.password, requestBody.username, requestBody.email);
+    @PostMapping("/signup")
+    public User registerNewUser(@RequestBody UserRequestBody requestBody,
+                                BindingResult bindingResult) {
+        return userService.registerNewUser(requestBody.password, requestBody.username, requestBody.email, bindingResult);
+    }
+
+    @PostMapping("/login")
+    public void login(String username,
+                      String password,
+                      BindingResult bindingResult){
+        userService.logUserIn(username, password, bindingResult);
     }
 
     @DeleteMapping("/delete?{id}")
