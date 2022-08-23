@@ -21,14 +21,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UserRequestDto"
+1              $ref: "#/components/schemas/UserRegistrationRequestDto"
       responses:
         '200':
           description: success!
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserResponseDto"
+                $ref: "#/components/schemas/UserDataResponseDto"
   /user/{username}:
     get:
       tags:
@@ -48,29 +48,78 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserResponseDto"
+                $ref: "#/components/schemas/UserDataResponseDto"
         '404':
           description: User not found
 components:
   schemas:
-    UserRequestDto:
+    UserRegistrationRequestDto:
       type: object
       properties:
         username:
           type: string
-          example: bjorn_bjornson
-        email:
+          example: thorn_bjornson
+        password:
           type: string
-          example: test@example.com
-    UserResponseDto:
+          example: password1234
+    UserByUsernameRequestDto:
       type: object
       properties:
         username:
           type: string
-          example: bjorn_bjornson
-        email:
+          example: thorn_bjornson
+    UserDataResponseDto:
+      type: object
+      properties:
+        username:
           type: string
-          example: test@example.com
-        role:
+          example: thorn_bjornson
+        stashes:
+          type: array
+          items:
+            $ref: "#/components/schemas/StashResponseDto"
+    UserEditRequestDto:
+      type: object
+      properties:
+        username:
           type: string
-          example: admin
+    StashRequestDto:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Collection of ancient coins
+        topic:
+          type: string
+          example: Coins
+        description:
+          type: string
+          example: Contains all the ancient coins I've found during archeological expeditions!
+    StashResponseDto:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Collection of ancient coins
+        topic:
+          type: string
+          example: Coins
+        description:
+          type: string
+          example: Contains all the ancient coins I've found during archeological expeditions!
+        artifacts:
+          type: array
+          items:
+            $ref: "#/components/schemas/ArtifactResponseDto"
+    ArtifactRequestDto:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Ancient Greek coin
+    ArtifactResponseDto:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Ancient Greek coin

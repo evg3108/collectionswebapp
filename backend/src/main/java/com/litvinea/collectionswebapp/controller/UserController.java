@@ -30,19 +30,6 @@ public class UserController {
         return foundUser.orElse(null);
     }
 
-    @PostMapping("/signup")
-    public User registerNewUser(@RequestBody UserRequestBody requestBody,
-                                BindingResult bindingResult) {
-        return userService.registerNewUser(requestBody.password, requestBody.username, requestBody.email, bindingResult);
-    }
-
-    @PostMapping("/login")
-    public void login(String username,
-                      String password,
-                      BindingResult bindingResult){
-        userService.logUserIn(username, password, bindingResult);
-    }
-
     @DeleteMapping("/delete?{id}")
     public ResponseEntity<Void> deleteUserById(@RequestParam("id") long id) {
         userService.deleteUser(id);

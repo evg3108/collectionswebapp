@@ -3,14 +3,13 @@ package com.litvinea.collectionswebapp.entity;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity (name = "polzovatel")
+@Entity
 public class User {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String username;
     private String password;
-    private String email;
     @OneToMany
     private List<Stash> stashes;
 
@@ -36,14 +35,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public List<Stash> getStashes() {

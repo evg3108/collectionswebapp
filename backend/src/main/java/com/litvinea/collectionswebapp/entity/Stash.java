@@ -8,6 +8,8 @@ public class Stash {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
     String title;
+    String topic;
+    String description;
     @OneToMany
     List<Artifact> artifacts;
 }
