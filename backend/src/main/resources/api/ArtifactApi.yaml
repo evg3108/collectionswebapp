@@ -1,0 +1,67 @@
+openapi: 3.0.3
+info:
+  title: Collections ARTIFACT API (OpenAPI 3.0.3)
+  description: Here you can find all api methods for operations about Artifacts
+  contact:
+    email: rusakova.evg@gmail.com
+  version: in developement
+tags:
+  - name: artifact
+    description: operations about Artifacts
+paths:
+  /artifact/create:
+    post:
+      tags:
+        - artifact
+      summary: Create new Artifact
+      description: To create new Artifact, enter its name and ID of the Stash you need to put it into
+      operationId: createNewArtifact
+      requestBody:
+        description: parameters for new Artifact
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ArtifactRequestDto"
+      responses:
+        '200':
+          description: success!
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArtifactResponseDto"
+  /artifact/{id}:
+    get:
+      tags:
+        - artifact
+      summary: Find Artifact by title
+      description: Enter title to find the Artifact
+      operationId: findById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: success!
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArtifactResponseDto"
+        '404':
+          description: Artifact not found
+components:
+  schemas:
+    ArtifactRequestDto:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Ancient Greek coin
+    ArtifactResponseDto:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Ancient Greek coin

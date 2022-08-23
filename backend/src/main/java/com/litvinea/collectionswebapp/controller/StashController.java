@@ -31,7 +31,7 @@ public class StashController {
         return ResponseEntity.ok(null);
     }
 
-    @DeleteMapping("/delete?{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteStashById(@RequestParam("id") long id){
         stashRepository.deleteById(id);
         return ResponseEntity.ok(null);

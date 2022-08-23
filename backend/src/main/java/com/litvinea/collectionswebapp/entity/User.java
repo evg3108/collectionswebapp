@@ -3,7 +3,7 @@ package com.litvinea.collectionswebapp.entity;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
+@Entity (name = "useruser")
 public class User {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -2,7 +2,7 @@
 
 --changeset litvina.e:init-db-model
 
-create table if not exists "user" (
+create table if not exists useruser (
     id bigserial primary key,
     username varchar,
     password varchar
@@ -14,7 +14,7 @@ create table if not exists stash
     title varchar,
     topic varchar,
     description varchar,
-    user_id bigint references "user"(id) not null
+    user_id bigint references useruser(id) not null
 );
 
 create table if not exists artifact
@@ -36,5 +36,5 @@ create table if not exists user_stash (
     user_id integer  not null,
     primary key (stash_id, user_id),
     foreign key (stash_id) references stash,
-    foreign key (user_id) references "user"
+    foreign key (user_id) references useruser
 );

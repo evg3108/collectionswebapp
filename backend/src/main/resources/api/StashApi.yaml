@@ -1,0 +1,85 @@
+openapi: 3.0.3
+info:
+  title: Collections STASH API (OpenAPI 3.0.3)
+  description: Here you can find all api methods for operations about Stashes
+  contact:
+    email: rusakova.evg@gmail.com
+  version: in developement
+tags:
+  - name: stash
+    description: operations about Stashes
+paths:
+  /artifact/create:
+    post:
+      tags:
+        - stash
+      summary: Create new Stash
+      description: To create new Stash, enter its title, topic, description and related User ID
+      operationId: createNewStash
+      requestBody:
+        description: parameters for new Stash
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StashRequestDto"
+      responses:
+        '200':
+          description: success!
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StashResponseDto"
+  /artifact/{id}:
+    get:
+      tags:
+        - stash
+      summary: Find Stash by title
+      description: Enter title to find the Stash
+      operationId: findById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: success!
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StashResponseDto"
+        '404':
+          description: Artifact not found
+components:
+  schemas:
+    StashRequestDto:
+      type: object
+      properties:
+        user_id:
+          type: integer
+          example: 13
+        title:
+          type: string
+          example: Collection of ancient coins
+        topic:
+          type: string
+          example: Coins
+        description:
+          type: string
+          example: Contains all the ancient coins I've found during archeological expeditions!
+    StashResponseDto:
+      type: object
+      properties:
+        user_id:
+          type: integer
+          example: 13
+        title:
+          type: string
+          example: Collection of ancient coins
+        topic:
+          type: string
+          example: Coins
+        description:
+          type: string
+          example: Contains all the ancient coins I've found during archeological expeditions!

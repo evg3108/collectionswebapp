@@ -27,12 +27,12 @@ public class ArtifactController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Void> createNewStash(Artifact artifact){
+    public ResponseEntity<Void> createNewArtifact(Artifact artifact){
         artifactRepository.save(artifact);
         return ResponseEntity.ok(null);
     }
 
-    @DeleteMapping("/delete?{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteArtifactById(@RequestParam("id") long id){
         artifactRepository.deleteById(id);
         return ResponseEntity.ok(null);

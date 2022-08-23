@@ -30,7 +30,7 @@ public class UserController {
         return foundUser.orElse(null);
     }
 
-    @DeleteMapping("/delete?{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteUserById(@RequestParam("id") long id) {
         userService.deleteUser(id);
         return ResponseEntity.ok(null);

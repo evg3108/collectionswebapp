@@ -1,0 +1,70 @@
+openapi: 3.0.3
+info:
+  title: Collections USER API (OpenAPI 3.0.3)
+  description: Here you can find all api methods for operations about Users
+  contact:
+    email: rusakova.evg@gmail.com
+  version: in developement
+tags:
+  - name: user
+    description: operations about users
+paths:
+  /user/{username}:
+    get:
+      tags:
+        - user
+      summary: Find user by username
+      description: Enter username to find the user
+      operationId: getUserById
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDataResponseDto"
+        '404':
+          description: User not found
+  /user/delete/{id}:
+    delete:
+      tags:
+        - user
+      summary: Delete user by provided ID
+      description: Enter ID of the user you want to delete
+      operationId: deleteUserById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successfully deleted!
+        '404':
+          description: No user with provided ID
+components:
+  schemas:
+    UserByUsernameRequestDto:
+      type: object
+      properties:
+        username:
+          type: string
+          example: thorn_bjornson
+    UserDataResponseDto:
+      type: object
+      properties:
+        username:
+          type: string
+          example: thorn_bjornson
+    UserEditRequestDto:
+      type: object
+      properties:
+        username:
+          type: string
