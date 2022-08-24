@@ -24,7 +24,7 @@ paths:
               $ref: "#/components/schemas/ArtifactRequestDto"
       responses:
         '200':
-          description: success!
+          description: OK
           content:
             application/json:
               schema:
@@ -51,6 +51,67 @@ paths:
                 $ref: "#/components/schemas/ArtifactResponseDto"
         '404':
           description: Artifact not found
+  /artifact/{stash_id}/all-artifacts:
+    get:
+      tags:
+        - artifact
+      summary: Find Artifact by stashID
+      description: Enter stashID to find all contained Artifacts
+      operationId: findAllByStashId
+      parameters:
+        - name: stash_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArtifactResponseDto"
+        '404':
+          description: No user with provided ID
+  /artifact/edit:
+    put:
+      tags:
+        - artifact
+      summary: Edit existing Artifact
+      operationId: editArtifact
+      requestBody:
+        description: Enter new values to the fields you'd like to change
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ArtifactRequestDto"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArtifactResponseDto"
+        '404':
+          description: Artifact not found
+  /artifact/delete/{id}:
+    delete:
+      tags:
+        - artifact
+      summary: Delete Artifact by id
+      description: Enter id to delete the Artifact
+      operationId: deleteArtifactById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: No Artifact with provided ID
 components:
   schemas:
     ArtifactRequestDto:

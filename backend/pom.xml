@@ -54,6 +54,21 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>1.6.11</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openapitools</groupId>
+			<artifactId>jackson-databind-nullable</artifactId>
+			<version>0.2.3</version>
+		</dependency>
+		<dependency>
+			<groupId>io.swagger.parser.v3</groupId>
+			<artifactId>swagger-parser-v3</artifactId>
+			<version>2.1.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -95,6 +110,59 @@
                     <target>16</target>
                 </configuration>
             </plugin>
+			<plugin>
+				<groupId>org.openapitools</groupId>
+				<artifactId>openapi-generator-maven-plugin</artifactId>
+				<!-- RELEASE_VERSION -->
+				<version>6.0.0</version>
+				<!-- /RELEASE_VERSION -->
+				<configuration>
+					<generatorName>spring</generatorName>
+					<apiPackage>com.litvinea.collectionswebapp.api</apiPackage>
+					<modelPackage>com.litvinea.collectionswebapp.api.dto</modelPackage>
+					<configOptions>
+						<sourceFolder>src/main</sourceFolder>
+					</configOptions>
+				</configuration>
+				<executions>
+					<execution>
+						<id>artifact-api-generator</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<inputSpec>${project.basedir}/src/main/resources/api/ArtifactApi.yaml</inputSpec>
+						</configuration>
+					</execution>
+					<execution>
+						<id>stash-api-generator</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<inputSpec>${project.basedir}/src/main/resources/api/StashApi.yaml</inputSpec>
+						</configuration>
+					</execution>
+					<execution>
+						<id>user-api-generator</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<inputSpec>${project.basedir}/src/main/resources/api/UserApi.yaml</inputSpec>
+						</configuration>
+					</execution>
+					<execution>
+						<id>auth-api-generator</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<inputSpec>${project.basedir}/src/main/resources/api/AuthApi.yaml</inputSpec>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
         </plugins>
 	</build>
 

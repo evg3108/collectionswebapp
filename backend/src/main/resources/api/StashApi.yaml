@@ -9,7 +9,7 @@ tags:
   - name: stash
     description: operations about Stashes
 paths:
-  /artifact/create:
+  /stash/create:
     post:
       tags:
         - stash
@@ -24,18 +24,18 @@ paths:
               $ref: "#/components/schemas/StashRequestDto"
       responses:
         '200':
-          description: success!
+          description: OK
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/StashResponseDto"
-  /artifact/{id}:
+  /stash/{id}:
     get:
       tags:
         - stash
-      summary: Find Stash by title
-      description: Enter title to find the Stash
-      operationId: findById
+      summary: Find Stash by id
+      description: Enter id to find the Stash
+      operationId: findStashById
       parameters:
         - name: id
           in: path
@@ -44,13 +44,74 @@ paths:
             type: string
       responses:
         '200':
-          description: success!
+          description: OK
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/StashResponseDto"
         '404':
           description: Artifact not found
+  /stash/{user_id}/all-stashes:
+    get:
+      tags:
+        - stash
+      summary: Find Stash by userID
+      description: Enter userID to find all their Stashes
+      operationId: findAllStashesByUser
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StashResponseDto"
+        '404':
+          description: No user with provided ID
+  /stash/edit:
+    put:
+      tags:
+        - stash
+      summary: Edit existing Stash
+      operationId: editStash
+      requestBody:
+        description: Enter new values to the fields you'd like to change
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StashRequestDto"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StashResponseDto"
+        '404':
+          description: Artifact not found
+  /stash/delete/{id}:
+    delete:
+      tags:
+        - stash
+      summary: Delete Stash by id
+      description: Enter id to delete the Stash
+      operationId: deleteStashById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: No Stash with provided ID
 components:
   schemas:
     StashRequestDto:
