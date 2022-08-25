@@ -21,16 +21,11 @@ public class StashService {
     }
 
     public List<Stash> findAllByUserId(long userId){
-        return stashRepository.findByUser(userId);
+        return stashRepository.findByUserId(userId);
     }
 
     public Optional<Stash> findById(long id){
         return stashRepository.findById(id);
-    }
-
-    public List<Stash> findAllByUser(String username){
-        Optional<User> user = userRepository.findByUsername(username);
-        return user.isEmpty() ? null : user.get().getStashes();
     }
 
     public Stash createNewStash(Stash stash){

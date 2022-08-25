@@ -12,7 +12,6 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -25,19 +24,13 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    public User saveNewUser(User user){
+    public User registerNewUser(User user){
         return userRepository.save(user);
     }
 
-    public boolean deleteUser(long id){
-        Optional<User> userToDelete = userRepository.findById(id);
-        if(userToDelete.isEmpty()){
-            return false;
-        } else {
-            userRepository.delete(userToDelete.get());
-            return true;
+    public void deleteUserById(long id){
+        userRepository.deleteById(id);
         }
-    }
 
 
 }

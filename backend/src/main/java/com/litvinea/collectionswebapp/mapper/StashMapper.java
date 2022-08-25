@@ -1,8 +1,10 @@
 package com.litvinea.collectionswebapp.mapper;
 
 import com.litvinea.collectionswebapp.entity.Stash;
+import com.litvinea.collectionswebapp.entity.User;
 import org.openapitools.model.AllStashesResponseDto;
-import org.openapitools.model.StashRequestDto;
+import org.openapitools.model.StashCreateRequestDto;
+import org.openapitools.model.StashEditRequestDto;
 import org.openapitools.model.StashResponseDto;
 
 import java.util.List;
@@ -10,19 +12,36 @@ import java.util.stream.Collectors;
 
 public class StashMapper {
 
-    public static Stash toEntity(StashRequestDto requestDto){
+    public static Stash toEntity(StashCreateRequestDto request){
         Stash stash = new Stash();
-        stash.setTitle(requestDto.getTitle());
-        stash.setTopic(requestDto.getTopic());
-        stash.setDescription(requestDto.getDescription());
+        stash.setTitle(request.getTitle());
+        stash.setTopic(request.getTopic());
+        stash.setDescription(request.getDescription());
+        User user = new User();
+        user.setId(request.getUserId());
+        stash.setUser(user);
+        return stash;
+    }
+
+    public static Stash toEntity(StashEditRequestDto request){
+        Stash stash = new Stash();
+        stash.setId(request.getId());
+        stash.setTitle(request.getTitle());
+        stash.setTopic(request.getTopic());
+        stash.setDescription(request.getDescription());
+        User user = new User();
+        user.setId(request.getUserId());
+        stash.setUser(user);
         return stash;
     }
 
     public static StashResponseDto toDto(Stash stash){
         StashResponseDto response = new StashResponseDto();
+        response.setId(stash.getId());
         response.setTitle(stash.getTitle());
         response.setTopic(stash.getTopic());
         response.setDescription(stash.getDescription());
+        response.setUserId(stash.getUser().getId());
         return response;
     }
 

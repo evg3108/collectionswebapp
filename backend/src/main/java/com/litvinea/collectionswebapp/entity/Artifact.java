@@ -6,15 +6,19 @@ import java.util.List;
 @Entity
 public class Artifact {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long artifactId;
+    long id;
     String title;
     @ManyToMany
     List<Tag> tags;
     @ManyToOne
     Stash stash;
 
-    public long getArtifactId() {
-        return artifactId;
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getTitle() {

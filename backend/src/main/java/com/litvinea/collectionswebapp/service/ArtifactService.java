@@ -1,12 +1,8 @@
 package com.litvinea.collectionswebapp.service;
 
 import com.litvinea.collectionswebapp.entity.Artifact;
-import com.litvinea.collectionswebapp.entity.Stash;
-import com.litvinea.collectionswebapp.mapper.ArtifactMapper;
 import com.litvinea.collectionswebapp.repository.ArtifactRepository;
 import com.litvinea.collectionswebapp.repository.StashRepository;
-import org.openapitools.model.ArtifactRequestDto;
-import org.openapitools.model.ArtifactResponseDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,15 +12,17 @@ import java.util.Optional;
 public class ArtifactService {
 
     private final ArtifactRepository artifactRepository;
-    private final StashRepository stashRepository;
 
-    public ArtifactService(ArtifactRepository artifactRepository, StashRepository stashRepository) {
+    public ArtifactService(ArtifactRepository artifactRepository) {
         this.artifactRepository = artifactRepository;
-        this.stashRepository = stashRepository;
     }
 
-    public List<Artifact> findAll(long stashId){
-        return artifactRepository.findByStash(stashId);
+    public Artifact createNewArtifact(Artifact artifact){
+        return artifactRepository.save(artifact);
+    }
+
+    public List<Artifact> findAllByStashId(long stashId){
+        return artifactRepository.findByStashId(stashId);
     }
 
 //    public Page<Artifact> findAllSorted(long stashId, int pageNumber, int itemsPerPage, String sortBy){
@@ -44,19 +42,8 @@ public class ArtifactService {
         return found.get();
     }
 
-    public List<Artifact> findAllByStashId(long stashId){
-        Optional<Stash> stash = stashRepository.findById(stashId);
-        return stash.isEmpty() ? null : stash.get().getArtifacts();
-    }
-
-    public ArtifactResponseDto createNewArtifact(ArtifactRequestDto requestDto){
-        Artifact savedArtifact = artifactRepository.save(ArtifactMapper.toEntity(requestDto));
-        return ArtifactMapper.toDto(savedArtifact);
-    }
-
-    public ArtifactResponseDto editArtifact(ArtifactRequestDto requestDto){
-        Artifact editedArtifact = artifactRepository.save(ArtifactMapper.toEntity(requestDto));
-        return ArtifactMapper.toDto(editedArtifact);
+    public Artifact editArtifact(Artifact artifact){
+        return artifactRepository.save(artifact);
     }
 
     public void deleteArtifactById(long id){

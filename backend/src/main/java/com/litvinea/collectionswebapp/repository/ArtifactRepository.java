@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface ArtifactRepository extends JpaRepository<Artifact, Long> {
-    List<Artifact> findByStash(long stash_id);
+    List<Artifact> findByStashId(long stash_id);
 }

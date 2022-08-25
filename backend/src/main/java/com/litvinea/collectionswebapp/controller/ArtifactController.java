@@ -4,10 +4,7 @@ import com.litvinea.collectionswebapp.entity.Artifact;
 import com.litvinea.collectionswebapp.mapper.ArtifactMapper;
 import com.litvinea.collectionswebapp.service.ArtifactService;
 import org.openapitools.api.ArtifactApi;
-import org.openapitools.model.AllArtifactsResponseDto;
-import org.openapitools.model.ArtifactRequestDto;
-import org.openapitools.model.ArtifactResponseDto;
-import org.openapitools.model.PageArtifactRequestDto;
+import org.openapitools.model.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,8 +20,10 @@ public class ArtifactController implements ArtifactApi {
     }
 
     @Override
-    public ResponseEntity<ArtifactResponseDto> createNewArtifact(ArtifactRequestDto artifactRequestDto) {
-        return ResponseEntity.ok(artifactService.createNewArtifact(artifactRequestDto));
+    public ResponseEntity<ArtifactResponseDto> createNewArtifact(ArtifactCreateRequestDto request) {
+        Artifact newArtifact = ArtifactMapper.toEntity(request);
+        ArtifactResponseDto response = ArtifactMapper.toDto(artifactService.createNewArtifact(newArtifact));
+        return ResponseEntity.ok(response);
     }
 
     @Override
@@ -34,8 +33,10 @@ public class ArtifactController implements ArtifactApi {
     }
 
     @Override
-    public ResponseEntity<ArtifactResponseDto> editArtifact(ArtifactRequestDto artifactRequestDto) {
-        return ResponseEntity.ok(artifactService.editArtifact(artifactRequestDto));
+    public ResponseEntity<ArtifactResponseDto> editArtifact(ArtifactEditRequestDto request) {
+        Artifact artifactToEdit = ArtifactMapper.toEntity(request);
+        ArtifactResponseDto response = ArtifactMapper.toDto(artifactService.editArtifact(artifactToEdit));
+        return ResponseEntity.ok(response);
     }
 
     @Override

@@ -5,7 +5,8 @@ import com.litvinea.collectionswebapp.mapper.StashMapper;
 import com.litvinea.collectionswebapp.service.StashService;
 import org.openapitools.api.StashApi;
 import org.openapitools.model.AllStashesResponseDto;
-import org.openapitools.model.StashRequestDto;
+import org.openapitools.model.StashCreateRequestDto;
+import org.openapitools.model.StashEditRequestDto;
 import org.openapitools.model.StashResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +26,8 @@ public class StashController implements StashApi {
     }
 
     @Override
-    public ResponseEntity<StashResponseDto> createNewStash(StashRequestDto stashRequestDto) {
-        Stash stash = StashMapper.toEntity(stashRequestDto);
+    public ResponseEntity<StashResponseDto> createNewStash(StashCreateRequestDto request) {
+        Stash stash = StashMapper.toEntity(request);
         StashResponseDto response = StashMapper.toDto(stashService.createNewStash(stash));
         return ResponseEntity.ok(response);
     }
@@ -38,7 +39,7 @@ public class StashController implements StashApi {
     }
 
     @Override
-    public ResponseEntity<StashResponseDto> editStash(StashRequestDto request) {
+    public ResponseEntity<StashResponseDto> editStash(StashEditRequestDto request) {
         Stash stashToEdit = StashMapper.toEntity(request);
         StashResponseDto response = StashMapper.toDto(stashService.editStash(stashToEdit));
         return ResponseEntity.ok(response);

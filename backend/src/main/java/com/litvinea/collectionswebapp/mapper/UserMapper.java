@@ -7,16 +7,16 @@ import org.openapitools.model.UserRegistrationRequestDto;
 
 public class UserMapper {
 
+    public static User toEntity (UserEditRequestDto request){
+        User user = new User();
+        user.setUsername(request.getUsername());
+        return user;
+    }
+
     public static UserDataResponseDto toDto (User user){
         UserDataResponseDto userDto = new UserDataResponseDto();
         userDto.setUsername(user.getUsername());
         return userDto;
-    }
-
-    public static User toEntity (UserEditRequestDto userDto){
-        User user = new User();
-        user.setUsername(userDto.getUsername());
-        return user;
     }
 
     public static User toDto (UserRegistrationRequestDto userDto){

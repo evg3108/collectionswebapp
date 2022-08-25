@@ -21,7 +21,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/StashRequestDto"
+              $ref: "#/components/schemas/StashCreateRequestDto"
       responses:
         '200':
           description: OK
@@ -52,7 +52,7 @@ paths:
                 $ref: "#/components/schemas/StashResponseDto"
         '404':
           description: Artifact not found
-  /stash/{user_id}/all-stashes:
+  /stash/all-stashes/{user_id}:
     get:
       tags:
         - stash
@@ -86,7 +86,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/StashRequestDto"
+              $ref: "#/components/schemas/StashEditRequestDto"
       responses:
         '200':
           description: OK
@@ -117,9 +117,29 @@ paths:
           description: No Stash with provided ID
 components:
   schemas:
-    StashRequestDto:
+    StashCreateRequestDto:
       type: object
       properties:
+        user_id:
+          type: integer
+          format: int64
+          example: 13
+        title:
+          type: string
+          example: Collection of ancient coins
+        topic:
+          type: string
+          example: Coins
+        description:
+          type: string
+          example: Contains all the ancient coins I've found during archeological expeditions!
+    StashEditRequestDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 5
         user_id:
           type: integer
           format: int64
@@ -136,6 +156,10 @@ components:
     StashResponseDto:
       type: object
       properties:
+        id:
+          type: integer
+          format: int64
+          example: 5
         user_id:
           type: integer
           format: int64
