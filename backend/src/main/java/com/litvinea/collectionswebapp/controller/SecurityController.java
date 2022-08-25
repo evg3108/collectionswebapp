@@ -1,16 +1,15 @@
 package com.litvinea.collectionswebapp.controller;
 
 import com.litvinea.collectionswebapp.entity.User;
+import com.litvinea.collectionswebapp.mapper.UserMapper;
 import com.litvinea.collectionswebapp.service.RegistrationService;
-import com.litvinea.collectionswebapp.service.UserService;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.openapitools.api.AuthApi;
+import org.openapitools.model.UserRegistrationRequestDto;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/auth")
-public class SecurityController {
+public class SecurityController implements AuthApi {
 
     private final RegistrationService registrationService;
 
@@ -18,8 +17,10 @@ public class SecurityController {
         this.registrationService = registrationService;
     }
 
-    @PostMapping("/registration")
-    public User registerNewUser(String password, String username, BindingResult bindingResult){
-        return registrationService.registerNewUser(password, username, bindingResult);
+    @Override
+    public ResponseEntity<Void> registerNewUser(UserRegistrationRequestDto userRegistrationRequestDto) {
+        User user = UserMapper.toDto(userRegistrationRequestDto);
+        registrationService.registerNewUser(user);
+        return ResponseEntity.ok(null);
     }
 }

@@ -4,7 +4,7 @@ info:
   description: Here you can find all api methods for operations about Users
   contact:
     email: rusakova.evg@gmail.com
-  version: in developement
+  version: v0
 tags:
   - name: user
     description: operations about users
@@ -44,6 +44,7 @@ paths:
           required: true
           schema:
             type: integer
+            format: int64
       responses:
         '200':
           description: Successfully deleted!
@@ -66,5 +67,8 @@ components:
     UserEditRequestDto:
       type: object
       properties:
+        userId:
+          type: integer
+          format: int64
         username:
           type: string

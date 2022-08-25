@@ -4,7 +4,7 @@ info:
   description: Here you can find all api methods for authentication
   contact:
     email: rusakova.evg@gmail.com
-  version: in developement
+  version: v0
 tags:
   - name: auth
     description: operations about auth
@@ -14,7 +14,7 @@ paths:
       tags:
         - auth
       summary: Register new User
-      description: To regicter new User, choose a username and make up a password
+      description: To register new User, choose a username and make up a password
       operationId: registerNewUser
       requestBody:
         description: parameters for new user

@@ -1,40 +1,52 @@
 package com.litvinea.collectionswebapp.controller;
 
 import com.litvinea.collectionswebapp.entity.Artifact;
-import com.litvinea.collectionswebapp.entity.Stash;
-import com.litvinea.collectionswebapp.repository.ArtifactRepository;
+import com.litvinea.collectionswebapp.mapper.ArtifactMapper;
+import com.litvinea.collectionswebapp.service.ArtifactService;
+import org.openapitools.api.ArtifactApi;
+import org.openapitools.model.AllArtifactsResponseDto;
+import org.openapitools.model.ArtifactRequestDto;
+import org.openapitools.model.ArtifactResponseDto;
+import org.openapitools.model.PageArtifactRequestDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/artifacts")
-public class ArtifactController {
+public class ArtifactController implements ArtifactApi {
 
-    private ArtifactRepository artifactRepository;
+    private final ArtifactService artifactService;
 
-    @GetMapping("/all")
-    public List<Artifact> findAll(){
-        return artifactRepository.findAll();
+    public ArtifactController(ArtifactService artifactService) {
+        this.artifactService = artifactService;
     }
 
-    @GetMapping("{id}")
-    public Artifact findById(@RequestParam("id") long id){
-        Optional<Artifact> foundArtifact =  artifactRepository.findById(id);
-        return foundArtifact.orElse(null);
+    @Override
+    public ResponseEntity<ArtifactResponseDto> createNewArtifact(ArtifactRequestDto artifactRequestDto) {
+        return ResponseEntity.ok(artifactService.createNewArtifact(artifactRequestDto));
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Void> createNewArtifact(Artifact artifact){
-        artifactRepository.save(artifact);
+    @Override
+    public ResponseEntity<Void> deleteArtifactById(Long id) {
+        artifactService.deleteArtifactById(id);
         return ResponseEntity.ok(null);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteArtifactById(@RequestParam("id") long id){
-        artifactRepository.deleteById(id);
-        return ResponseEntity.ok(null);
+    @Override
+    public ResponseEntity<ArtifactResponseDto> editArtifact(ArtifactRequestDto artifactRequestDto) {
+        return ResponseEntity.ok(artifactService.editArtifact(artifactRequestDto));
+    }
+
+    @Override
+    public ResponseEntity<ArtifactResponseDto> findById(Long id) {
+        ArtifactResponseDto response = ArtifactMapper.toDto(artifactService.findById(id));
+        return ResponseEntity.ok(response);
+    }
+
+    @Override
+    public ResponseEntity<AllArtifactsResponseDto> findAllByStashId(Long stashId) {
+        List<Artifact> list = artifactService.findAllByStashId(stashId);
+        return ResponseEntity.ok(ArtifactMapper.toDto(list));
     }
 }

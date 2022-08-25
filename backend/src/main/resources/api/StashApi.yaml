@@ -4,7 +4,7 @@ info:
   description: Here you can find all api methods for operations about Stashes
   contact:
     email: rusakova.evg@gmail.com
-  version: in developement
+  version: v0
 tags:
   - name: stash
     description: operations about Stashes
@@ -41,7 +41,8 @@ paths:
           in: path
           required: true
           schema:
-            type: string
+            type: integer
+            format: int64
       responses:
         '200':
           description: OK
@@ -57,20 +58,21 @@ paths:
         - stash
       summary: Find Stash by userID
       description: Enter userID to find all their Stashes
-      operationId: findAllStashesByUser
+      operationId: findAllByUserId
       parameters:
         - name: user_id
           in: path
           required: true
           schema:
             type: integer
+            format: int64
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StashResponseDto"
+                $ref: "#/components/schemas/AllStashesResponseDto"
         '404':
           description: No user with provided ID
   /stash/edit:
@@ -107,6 +109,7 @@ paths:
           required: true
           schema:
             type: integer
+            format: int64
       responses:
         '200':
           description: OK
@@ -119,6 +122,7 @@ components:
       properties:
         user_id:
           type: integer
+          format: int64
           example: 13
         title:
           type: string
@@ -134,6 +138,7 @@ components:
       properties:
         user_id:
           type: integer
+          format: int64
           example: 13
         title:
           type: string
@@ -144,3 +149,10 @@ components:
         description:
           type: string
           example: Contains all the ancient coins I've found during archeological expeditions!
+    AllStashesResponseDto:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/StashResponseDto'

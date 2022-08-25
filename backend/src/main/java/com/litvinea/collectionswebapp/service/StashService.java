@@ -1,70 +1,48 @@
 package com.litvinea.collectionswebapp.service;
 
 import com.litvinea.collectionswebapp.entity.Stash;
+import com.litvinea.collectionswebapp.entity.User;
 import com.litvinea.collectionswebapp.repository.StashRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import com.litvinea.collectionswebapp.repository.UserRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class StashService {
 
-    @Autowired
-    private StashRepository stashRepository;
+    private final StashRepository stashRepository;
+    private final UserRepository userRepository;
 
-    public StashService(StashRepository stashRepository){
+    public StashService(StashRepository stashRepository, UserRepository userRepository){
         this.stashRepository = stashRepository;
+        this.userRepository = userRepository;
     }
 
-    /**
-     * Gets full list of existing collections (stashes)
-     * @return List<Stash>
-     */
-    public List<Stash> findAll(){
-        return stashRepository.findAll();
+    public List<Stash> findAllByUserId(long userId){
+        return stashRepository.findByUser(userId);
     }
 
-    /**
-     * Gets Stash with requested id
-     * @param id
-     * @return Stash or null
-     */
-
-    public Stash findById(long id){
-        Optional<Stash> foundStash =  stashRepository.findById(id);
-        return foundStash.orElse(null);
+    public Optional<Stash> findById(long id){
+        return stashRepository.findById(id);
     }
 
-    /**
-     * Adds new Stash with provided data to database
-     * @param stash must not be {@literal null}
-     * @return {@literal true} if or false
-     */
-    public boolean createNewStash(Stash stash){
-        stashRepository.save(stash);
-        return true;
+    public List<Stash> findAllByUser(String username){
+        Optional<User> user = userRepository.findByUsername(username);
+        return user.isEmpty() ? null : user.get().getStashes();
     }
 
-    /**
-     * Edits the existing Stash with provided id
-     * @param stash
-     * @return the edited stash; will never be {@literal null}
-     */
+    public Stash createNewStash(Stash stash){
+        return stashRepository.save(stash);
+    }
+
     public Stash editStash(Stash stash){
         return stashRepository.save(stash);
     }
 
-    /**
-     * Deletes Stash with provided id from database
-     * @param id
-     * @return true or false
-     */
-    public boolean deleteStashById(long id){
+    public void deleteStashById(long id){
         stashRepository.deleteById(id);
-        return true;
     }
 
 }

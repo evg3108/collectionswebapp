@@ -12,4 +12,32 @@ public class Artifact {
     List<Tag> tags;
     @ManyToOne
     Stash stash;
+
+    public long getArtifactId() {
+        return artifactId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public Stash getStash() {
+        return stash;
+    }
+
+    public void setStash(Stash stash) {
+        this.stash = stash;
+    }
 }

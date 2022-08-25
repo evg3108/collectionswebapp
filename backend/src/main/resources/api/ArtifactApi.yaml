@@ -4,7 +4,7 @@ info:
   description: Here you can find all api methods for operations about Artifacts
   contact:
     email: rusakova.evg@gmail.com
-  version: in developement
+  version: v0
 tags:
   - name: artifact
     description: operations about Artifacts
@@ -41,7 +41,8 @@ paths:
           in: path
           required: true
           schema:
-            type: string
+            type: integer
+            format: int64
       responses:
         '200':
           description: success!
@@ -64,13 +65,14 @@ paths:
           required: true
           schema:
             type: integer
+            format: int64
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ArtifactResponseDto"
+                $ref: "#/components/schemas/AllArtifactsResponseDto"
         '404':
           description: No user with provided ID
   /artifact/edit:
@@ -107,6 +109,7 @@ paths:
           required: true
           schema:
             type: integer
+            format: int64
       responses:
         '200':
           description: OK
@@ -120,9 +123,37 @@ components:
         title:
           type: string
           example: Ancient Greek coin
+        stashId:
+          type: integer
+          format: int64
+          example: 7
     ArtifactResponseDto:
       type: object
       properties:
         title:
           type: string
           example: Ancient Greek coin
+        stashId:
+          type: integer
+          format: int64
+          example: 7
+    PageArtifactRequestDto:
+      type: object
+      properties:
+        pageNumber:
+          minimum: 0
+          type: integer
+          format: int32
+        itemsPerPage:
+          minimum: 1
+          type: integer
+          format: int32
+        sortBy:
+          type: string
+    AllArtifactsResponseDto:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/ArtifactResponseDto'
