@@ -1,0 +1,117 @@
+openapi: 3.0.3
+info:
+  title: Collections TOPIC API (OpenAPI 3.0.3)
+  description: Here you can find all api methods for operations about Topics
+  contact:
+    email: rusakova.evg@gmail.com
+  version: v0
+tags:
+  - name: topic
+    description: operations about Topics
+paths:
+  /topic:
+    post:
+      tags:
+        - topic
+      summary: Create new Topic
+      description: Enter title for new topic to create one
+      operationId: createNewTopic
+      requestBody:
+        description: Title for new Topic
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Coins
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TopicResponseDto"
+  /topic/{id}:
+    put:
+      tags:
+        - topic
+      summary: Edit existing Topic
+      operationId: editTopic
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Enter new topic title
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Books
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TopicResponseDto"
+        '404':
+          description: Topic not found
+    delete:
+      tags:
+        - topic
+      summary: Delete Topic by id
+      description: Enter id to delete the Topic
+      operationId: deleteTopicById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: No Topic with provided ID found
+  /topic/all-topics:
+    get:
+      tags:
+        - topic
+      summary: Get list of all existing topics
+      operationId: findAll
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AllTopicsResponseDto"
+components:
+  schemas:
+    TopicResponseDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 5
+        title:
+          type: string
+          example: Coins
+    AllTopicsResponseDto:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/TopicResponseDto'

@@ -1,6 +1,7 @@
 package com.litvinea.collectionswebapp.mapper;
 
 import com.litvinea.collectionswebapp.entity.Stash;
+import com.litvinea.collectionswebapp.entity.Topic;
 import com.litvinea.collectionswebapp.entity.User;
 import org.openapitools.model.AllStashesResponseDto;
 import org.openapitools.model.StashCreateRequestDto;
@@ -15,7 +16,9 @@ public class StashMapper {
     public static Stash toEntity(StashCreateRequestDto request){
         Stash stash = new Stash();
         stash.setTitle(request.getTitle());
-        stash.setTopic(request.getTopic());
+        Topic topic = new Topic();
+        topic.setId(request.getTopic());
+        stash.setTopic(topic);
         stash.setDescription(request.getDescription());
         User user = new User();
         user.setId(request.getUserId());
@@ -25,9 +28,10 @@ public class StashMapper {
 
     public static Stash toEntity(StashEditRequestDto request){
         Stash stash = new Stash();
-        stash.setId(request.getId());
         stash.setTitle(request.getTitle());
-        stash.setTopic(request.getTopic());
+        Topic topic = new Topic();
+        topic.setId(request.getTopic());
+        stash.setTopic(topic);
         stash.setDescription(request.getDescription());
         User user = new User();
         user.setId(request.getUserId());
@@ -39,7 +43,7 @@ public class StashMapper {
         StashResponseDto response = new StashResponseDto();
         response.setId(stash.getId());
         response.setTitle(stash.getTitle());
-        response.setTopic(stash.getTopic());
+        response.setTopic(stash.getTopic().getTitle());
         response.setDescription(stash.getDescription());
         response.setUserId(stash.getUser().getId());
         return response;

@@ -32,7 +32,7 @@ public class UserController implements UserApi {
     @Override
     public ResponseEntity<UserDataResponseDto> getUserById(String username) {
         Optional<User> user = userService.findUserByUsername(username);
-        if(user.isEmpty()){
+        if(!user.isPresent()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Couldn't find user @" + username);
         }
         return ResponseEntity.ok(UserMapper.toDto(user.get()));

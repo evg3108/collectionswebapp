@@ -1,7 +1,6 @@
 package com.litvinea.collectionswebapp.service;
 
 import com.litvinea.collectionswebapp.entity.Stash;
-import com.litvinea.collectionswebapp.entity.User;
 import com.litvinea.collectionswebapp.repository.StashRepository;
 import com.litvinea.collectionswebapp.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,7 @@ public class StashService {
     }
 
     public List<Stash> findAllByUserId(long userId){
-        return stashRepository.findByUserId(userId);
+        return stashRepository.findByAppuserId(userId);
     }
 
     public Optional<Stash> findById(long id){
@@ -32,8 +31,16 @@ public class StashService {
         return stashRepository.save(stash);
     }
 
-    public Stash editStash(Stash stash){
-        return stashRepository.save(stash);
+    public Stash editStash(long id, Stash editedStash){
+        Optional<Stash> oldStash = stashRepository.findById(id);
+        if(!oldStash.isPresent()){
+            throw new IllegalArgumentException("No stash with id=" + id + " found");
+        }
+        Stash stashToSave = oldStash.get();
+        stashToSave.setTitle(editedStash.getTitle());
+        stashToSave.setTopic(editedStash.getTopic());
+        stashToSave.setDescription(editedStash.getDescription());
+        return stashRepository.save(stashToSave);
     }
 
     public void deleteStashById(long id){

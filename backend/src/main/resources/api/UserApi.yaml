@@ -90,6 +90,9 @@ components:
     UserDataResponseDto:
       type: object
       properties:
+        userId:
+          type: integer
+          format: int64
         username:
           type: string
           example: thorn_bjornson

@@ -8,12 +8,17 @@ public class Stash {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
     String title;
-    String topic;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    Topic topic;
+
     String description;
-    @OneToMany
+
+    @OneToMany(mappedBy = "stash", cascade = CascadeType.ALL)
     List<Artifact> artifacts;
-    @ManyToOne
-    User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    User appuser;
 
     public long getId() {
         return id;
@@ -29,11 +34,11 @@ public class Stash {
         this.title = title;
     }
 
-    public String getTopic() {
+    public Topic getTopic() {
         return topic;
     }
 
-    public void setTopic(String topic) {
+    public void setTopic(Topic topic) {
         this.topic = topic;
     }
 
@@ -54,10 +59,12 @@ public class Stash {
     }
 
     public User getUser() {
-        return user;
+        return appuser;
     }
 
     public void setUser(User user) {
-        this.user = user;
+        this.appuser = user;
     }
+
+
 }

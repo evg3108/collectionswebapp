@@ -39,16 +39,16 @@ public class StashController implements StashApi {
     }
 
     @Override
-    public ResponseEntity<StashResponseDto> editStash(StashEditRequestDto request) {
+    public ResponseEntity<StashResponseDto> editStash(@RequestParam("id") Long id, StashEditRequestDto request) {
         Stash stashToEdit = StashMapper.toEntity(request);
-        StashResponseDto response = StashMapper.toDto(stashService.editStash(stashToEdit));
+        StashResponseDto response = StashMapper.toDto(stashService.editStash(id, stashToEdit));
         return ResponseEntity.ok(response);
     }
 
     @Override
     public ResponseEntity<StashResponseDto> findStashById(Long id) {
         Optional<Stash> found = stashService.findById(id);
-        if(found.isEmpty()){
+        if(!found.isPresent()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No stash with id = " + id + " found");
         }
         StashResponseDto response = StashMapper.toDto(found.get());

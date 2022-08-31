@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface StashRepository extends JpaRepository<Stash, Long> {
-    List<Stash> findByUserId(long user_id);
+    List<Stash> findByAppuserId(long userId);
 }

@@ -3,14 +3,18 @@ package com.litvinea.collectionswebapp.entity;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity (name = "useruser")
+@Entity
+@Table(name = "appuser")
 public class User {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     private String username;
     private String password;
-    @OneToMany
+
+    @OneToMany(mappedBy = "appuser", cascade = CascadeType.ALL)
     private List<Stash> stashes;
 
     public long getId() {
