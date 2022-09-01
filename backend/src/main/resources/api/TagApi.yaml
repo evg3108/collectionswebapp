@@ -1,0 +1,106 @@
+openapi: 3.0.3
+info:
+  title: Collections TAG API (OpenAPI 3.0.3)
+  description: Here you can find all api methods for operations about Tags
+  contact:
+    email: rusakova.evg@gmail.com
+  version: v0
+tags:
+  - name: tag
+    description: operations about tags
+paths:
+  /tag:
+    post:
+      tags:
+        - tag
+      summary: Create new tag
+      description: Enter title for new tag to create one
+      operationId: createNewTag
+      requestBody:
+        description: Title for new Tag
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Coins
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TagResponseDto"
+  /tag/{id}:
+    delete:
+      tags:
+        - tag
+      summary: Delete Tag by id
+      description: Enter id to delete the Tag
+      operationId: deleteTagById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: No Tag with provided ID found
+  /tag/all-tags/{artifact_id}:
+    get:
+      tags:
+        - tag
+      summary: Get list of artifact's tags
+      operationId: findAllByArtifactId
+      parameters:
+        - name: artifact_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AllTagsResponseDto"
+  /tag/all-tags:
+    get:
+      tags:
+        - tag
+      summary: Get list of all existing tags
+      operationId: findAll
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AllTagsResponseDto"
+components:
+  schemas:
+    TagResponseDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 5
+        title:
+          type: string
+          example: Coins
+    AllTagsResponseDto:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/TagResponseDto'

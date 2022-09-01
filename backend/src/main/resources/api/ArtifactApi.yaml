@@ -33,8 +33,8 @@ paths:
     get:
       tags:
         - artifact
-      summary: Find Artifact by title
-      description: Enter title to find the Artifact
+      summary: Find Artifact by id
+      description: Enter id to find the Artifact
       operationId: findById
       parameters:
         - name: id
@@ -52,35 +52,18 @@ paths:
                 $ref: "#/components/schemas/ArtifactResponseDto"
         '404':
           description: Artifact not found
-  /artifact/all-artifacts/{stash_id}:
-    get:
-      tags:
-        - artifact
-      summary: Find Artifact by stashID
-      description: Enter stashID to find all contained Artifacts
-      operationId: findAllByStashId
-      parameters:
-        - name: stash_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AllArtifactsResponseDto"
-        '404':
-          description: No user with provided ID
-  /artifact/edit:
     put:
       tags:
         - artifact
       summary: Edit existing Artifact
       operationId: editArtifact
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
       requestBody:
         description: Enter new values to the fields you'd like to change
         content:
@@ -96,7 +79,6 @@ paths:
                 $ref: "#/components/schemas/ArtifactResponseDto"
         '404':
           description: Artifact not found
-  /artifact/delete/{id}:
     delete:
       tags:
         - artifact
@@ -115,6 +97,29 @@ paths:
           description: OK
         '404':
           description: No Artifact with provided ID
+  /artifact/all-artifacts/stash_id={stash_id}:
+    get:
+      tags:
+        - artifact
+      summary: Find Artifacts of one Stash by stashID
+      description: Enter stashID to find all contained Artifacts
+      operationId: findAllByStashId
+      parameters:
+        - name: stash_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AllArtifactsResponseDto"
+        '404':
+          description: No user with provided ID
 components:
   schemas:
     ArtifactCreateRequestDto:
@@ -127,13 +132,13 @@ components:
           type: integer
           format: int64
           example: 7
+        tags:
+          type: array
+          items:
+            type: string
     ArtifactEditRequestDto:
       type: object
       properties:
-        id:
-          type: integer
-          format: int64
-          example: 5
         title:
           type: string
           example: Ancient Greek coin
@@ -141,6 +146,10 @@ components:
           type: integer
           format: int64
           example: 7
+        tags:
+          type: array
+          items:
+            type: string
     ArtifactResponseDto:
       type: object
       properties:
@@ -155,6 +164,11 @@ components:
           type: integer
           format: int64
           example: 7
+        tags:
+          type: array
+          items:
+            type: string
+            example: ancient
     PageArtifactRequestDto:
       type: object
       properties:

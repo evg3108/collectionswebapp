@@ -9,10 +9,10 @@ tags:
   - name: user
     description: operations about users
 paths:
-  /user/registration:
+  /user/signup:
     post:
       tags:
-        - auth
+        - user
       summary: Register new User
       description: To register new User, choose a username and make up a password
       operationId: registerNewUser

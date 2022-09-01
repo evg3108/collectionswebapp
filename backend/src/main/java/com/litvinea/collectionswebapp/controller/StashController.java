@@ -1,8 +1,10 @@
 package com.litvinea.collectionswebapp.controller;
 
 import com.litvinea.collectionswebapp.entity.Stash;
+import com.litvinea.collectionswebapp.entity.Topic;
 import com.litvinea.collectionswebapp.mapper.StashMapper;
 import com.litvinea.collectionswebapp.service.StashService;
+import com.litvinea.collectionswebapp.service.TopicService;
 import org.openapitools.api.StashApi;
 import org.openapitools.model.AllStashesResponseDto;
 import org.openapitools.model.StashCreateRequestDto;
@@ -20,14 +22,17 @@ import java.util.Optional;
 public class StashController implements StashApi {
 
     private final StashService stashService;
+    private final TopicService topicService;
 
-    public StashController(StashService stashService) {
+    public StashController(StashService stashService, TopicService topicService) {
         this.stashService = stashService;
+        this.topicService = topicService;
     }
 
     @Override
     public ResponseEntity<StashResponseDto> createNewStash(StashCreateRequestDto request) {
-        Stash stash = StashMapper.toEntity(request);
+        Topic topic = topicService.getTopicById(request.getTopic());
+        Stash stash = StashMapper.toEntity(request, topic);
         StashResponseDto response = StashMapper.toDto(stashService.createNewStash(stash));
         return ResponseEntity.ok(response);
     }
@@ -40,7 +45,8 @@ public class StashController implements StashApi {
 
     @Override
     public ResponseEntity<StashResponseDto> editStash(@RequestParam("id") Long id, StashEditRequestDto request) {
-        Stash stashToEdit = StashMapper.toEntity(request);
+        Topic topic = topicService.getTopicById(request.getTopic());
+        Stash stashToEdit = StashMapper.toEntity(request, topic);
         StashResponseDto response = StashMapper.toDto(stashService.editStash(id, stashToEdit));
         return ResponseEntity.ok(response);
     }

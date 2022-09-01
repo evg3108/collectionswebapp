@@ -32,6 +32,14 @@ public class TopicService {
         return topicRepository.save(editedTopic);
     }
 
+    public Topic getTopicById(long id){
+        Optional<Topic> found = topicRepository.findById(id);
+        if(!found.isPresent()){
+            throw new IllegalArgumentException("No Topic with id="+id);
+        }
+        return found.get();
+    }
+
     public List<Topic> findAll(){
         return topicRepository.findAll();
     }

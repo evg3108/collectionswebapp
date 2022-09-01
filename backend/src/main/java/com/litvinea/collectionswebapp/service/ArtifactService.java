@@ -2,7 +2,6 @@ package com.litvinea.collectionswebapp.service;
 
 import com.litvinea.collectionswebapp.entity.Artifact;
 import com.litvinea.collectionswebapp.repository.ArtifactRepository;
-import com.litvinea.collectionswebapp.repository.StashRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,14 +35,21 @@ public class ArtifactService {
 
     public Artifact findById(long id){
         Optional<Artifact> found = artifactRepository.findById(id);
-        if(found.isEmpty()){
-            throw new NullPointerException("No user with id = " + id + " found!");
+        if(!found.isPresent()){
+            throw new NullPointerException("No artifact with id = " + id + " found!");
         }
         return found.get();
     }
 
-    public Artifact editArtifact(Artifact artifact){
-        return artifactRepository.save(artifact);
+    public Artifact editArtifact(long id, Artifact editedArtifact){
+        Optional<Artifact> oldArtifact = artifactRepository.findById(id);
+        if(!oldArtifact.isPresent()){
+            throw new IllegalArgumentException("No artifact with id=" + id);
+        }
+        Artifact artifactToSave = oldArtifact.get();
+        artifactToSave.setTitle(editedArtifact.getTitle());
+        artifactToSave.setTags(editedArtifact.getTags());
+        return artifactRepository.save(artifactToSave);
     }
 
     public void deleteArtifactById(long id){

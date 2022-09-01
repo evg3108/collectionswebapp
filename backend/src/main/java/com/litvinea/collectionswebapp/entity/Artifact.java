@@ -8,10 +8,18 @@ public class Artifact {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
     String title;
-    @ManyToMany
-    List<Tag> tags;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="stash_id", nullable=false)
     Stash stash;
+
+    @ManyToMany
+    @JoinTable(
+            name = "artifact_tag",
+            joinColumns = { @JoinColumn(name = "artifact_id") },
+            inverseJoinColumns = { @JoinColumn(name = "tag_id") }
+    )
+    List<Tag> tags;
 
     public long getId() {
         return id;

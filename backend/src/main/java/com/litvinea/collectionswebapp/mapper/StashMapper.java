@@ -13,11 +13,9 @@ import java.util.stream.Collectors;
 
 public class StashMapper {
 
-    public static Stash toEntity(StashCreateRequestDto request){
+    public static Stash toEntity(StashCreateRequestDto request, Topic topic){
         Stash stash = new Stash();
         stash.setTitle(request.getTitle());
-        Topic topic = new Topic();
-        topic.setId(request.getTopic());
         stash.setTopic(topic);
         stash.setDescription(request.getDescription());
         User user = new User();
@@ -26,11 +24,9 @@ public class StashMapper {
         return stash;
     }
 
-    public static Stash toEntity(StashEditRequestDto request){
+    public static Stash toEntity(StashEditRequestDto request, Topic topic){
         Stash stash = new Stash();
         stash.setTitle(request.getTitle());
-        Topic topic = new Topic();
-        topic.setId(request.getTopic());
         stash.setTopic(topic);
         stash.setDescription(request.getDescription());
         User user = new User();

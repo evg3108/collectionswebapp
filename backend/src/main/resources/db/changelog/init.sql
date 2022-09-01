@@ -1,20 +1,25 @@
 --liquibase formatted sql
 
---changeset litvina.e:init-db-model
+--changeset litvina.e:init-db
 
-create table if not exists useruser (
+create table if not exists appuser (
     id bigserial primary key,
-    username varchar,
+    username varchar unique,
     password varchar
+);
+
+create table if not exists topic (
+    id bigserial primary key,
+    title varchar unique
 );
 
 create table if not exists stash
 (
     id bigserial primary key,
     title varchar,
-    topic varchar,
     description varchar,
-    user_id bigint references useruser(id) not null
+    topic_id bigint references topic (id) not null,
+    appuser_id bigint references appuser(id) not null
 );
 
 create table if not exists artifact
@@ -27,14 +32,13 @@ create table if not exists artifact
 create table if not exists tag
 (
     id bigserial primary key,
-    title varchar
+    title varchar unique
 );
 
-
-create table if not exists user_stash (
-    stash_id integer not null,
-    user_id integer  not null,
-    primary key (stash_id, user_id),
-    foreign key (stash_id) references stash,
-    foreign key (user_id) references useruser
+create table if not exists artifact_tag (
+    artifact_id integer not null,
+    tag_id integer  not null,
+    primary key (artifact_id, tag_id),
+    foreign key (artifact_id) references artifact,
+    foreign key (tag_id) references tag
 );
