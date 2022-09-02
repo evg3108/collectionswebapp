@@ -1,10 +1,10 @@
-package com.litvinea.task4table;
+package com.litvinea.collectionswebapp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Task4tableApplicationTests {
+class CollectionswebappApplicationTests {
 
 	@Test
 	void contextLoads() {
