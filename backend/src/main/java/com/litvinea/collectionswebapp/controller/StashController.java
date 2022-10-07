@@ -18,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin("http://127.0.0.1:8000/")
 @RestController
 public class StashController implements StashApi {
 

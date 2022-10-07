@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("http://127.0.0.1:8000/")
 @RestController
 public class ArtifactController implements ArtifactApi {
 

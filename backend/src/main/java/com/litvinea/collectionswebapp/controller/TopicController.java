@@ -9,8 +9,10 @@ import org.openapitools.model.CreateNewTopicRequest;
 import org.openapitools.model.EditTopicRequest;
 import org.openapitools.model.TopicResponseDto;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
+@CrossOrigin("http://127.0.0.1:8000/")
 @RestController
 public class TopicController implements TopicApi {
 
